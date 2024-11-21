@@ -9,8 +9,12 @@ from SendInput import Keyboard
 
 
 def input_one_char(char_str):
-    Keyboard.pressByUnicode(char_str)
-    Keyboard.releaseByUnicode(char_str)
+    if char_str=='\n':
+        Keyboard.press(0x0D) # ENTER键
+        Keyboard.release(0x0D)
+    else:
+        Keyboard.pressByUnicode(char_str)
+        Keyboard.releaseByUnicode(char_str)
 
 
 def simulate_input_st():
@@ -24,6 +28,9 @@ def simulate_input_st():
 def simulate_input():
     # 获取文本框中的文本
     text_to_type = text_area.get("0.0", "end-1c")
+    # 统一换行符
+    text_to_type = text_to_type.replace('\r\n', '\n')
+    text_to_type = text_to_type.replace('\r', '\n')
 
     # 延时3秒，修改按钮显示的文本
     for i in range(3):
